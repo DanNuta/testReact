@@ -1,31 +1,89 @@
 import { useState, useEffect } from "react";
-import { Props } from "./useFetchType";
+import { DataDbType, CityInformation } from "./useFetchType";
 
-const url: string =
-  "https://s3.us-west-2.amazonaws.com/secure.notion-static.com/64989ad8-dc80-4cad-bd6d-870ba0be2f4d/roundtrip.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230120%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230120T100124Z&X-Amz-Expires=86400&X-Amz-Signature=fe415b66f3bb65b7cfd1788e3c1323b7a139d03ba4c66c3c03d2f096f5ac580c&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22roundtrip.json%22&x-id=GetObject";
 
-export function useFetch() {
-  const [data, setData] = useState<Props[]>([]);
+export function useFetch(url: string) {
+  const [data_db, setData] = useState<DataDbType[]>([]);
   const [pendign, setPendign] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null)
+
 
   useEffect(() => {
     async function getData() {
       setPendign(true);
 
-      const data_db = await fetch(url);
-      const json_data = await data_db.json();
 
-      console.log(
-        json_data.data.returnItineraries.itineraries[0].price.amount,
-        "data"
-      );
+      try{
+          const data_db = await fetch(url);
+          const json_data = await data_db.json();
+          const {data: {returnItineraries: {itineraries}}} = json_data;
 
-      setData(() => json_data);
-      setPendign(false);
+
+          for(const element of itineraries){
+
+            const data_rezervare: DataDbType = {
+              id: element.id,
+              price: element.price.amount,
+              currency: element.price.currency.code,
+              course: []
+            }
+
+
+            const {sector} = element;
+
+
+            for(const {segments} of sector){
+
+              for(const seg of segments){
+                
+                const {segment: {source: {station: {city: {name: city_name}}}}} = seg;
+                const {segment: {source: {station: {country: {name: country_name}}}}} = seg;
+                const {segment: {source: {station: {code: code_airport_station}}}} = seg;
+
+                const {segment: {destination: {station: {city: {name: destination_city}}}}} = seg;
+                const {segment: {destination: {station: {country: {name: destination_country}}}}} = seg;
+                const {segment: {destination: {station: {code: code_airport_destination}}}} = seg;
+
+                const city: CityInformation = {
+
+                  city_station: {
+                    city: city_name,
+                    country: country_name,
+                    code_airport: code_airport_station
+                  },
+
+                  city_destination: {
+                    city: destination_city,
+                    country: destination_country,
+                    code_airport: code_airport_destination
+                  }
+                }
+
+                data_rezervare.course.push(city);
+
+              }
+                
+            }
+
+
+            setData((prev) => {
+
+              return [...prev, data_rezervare]
+              
+            });
+          }
+
+           setPendign(false);
+           setError(null)
+
+        }catch(e){
+          setPendign(false);
+          setError("A aparut o eroare incercati mai tarziu")
+        }
     }
 
     getData();
   }, []);
 
-  return { data, pendign };
+  return { data_db, pendign, error };
 }
