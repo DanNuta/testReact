@@ -1,7 +1,7 @@
 import { useFetch } from './hook/useFetch/useFetch';
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
-import { Zboruri } from './pages/Zboruri/Zboruri';
+import { Zboruri } from './pages/Zboruri/Zborur';
 
 
 const url: string =
@@ -10,14 +10,19 @@ const url: string =
 
 function App() {
 
-  const {data_db, pendign, error} = useFetch(url)
+  const {data_db, pendign, error} = useFetch(url);
+
+  
 
   return (
 
     <BrowserRouter>
 
     <Routes>
-      <Route path='/zboruri' element={<Zboruri/>}></Route>
+      <Route path='/zboruri' element={<Zboruri data={data_db} 
+                                               pending={pendign}
+                                               error={error}
+            />}></Route>
     </Routes>
 
 

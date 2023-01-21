@@ -1,11 +1,18 @@
 import React, { PropsWithChildren } from "react";
+import {Props} from "./Zboruri.type";
+import {Item} from "../../components/Item/Item"
 
 
-export const ZboruriView: React.FC<PropsWithChildren> = (props: PropsWithChildren) => {
+export const ZboruriView: React.FC<PropsWithChildren<Props>> = (props: PropsWithChildren<Props>) => {
 
     return ( 
         <>
-          <h1>salut</h1>
+
+          {props.data && props.data.map(item => {
+            return (
+              <Item item={item}/>
+            )
+          })}
         </>
      );
 }
