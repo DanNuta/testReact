@@ -5,7 +5,7 @@ export type DataDbType = {
     course: CityInformation[]
 };
 
-export type CityInformation = {
+export interface CityInformation {
     city_station: City_Info,
     city_destination: City_Info,
 }

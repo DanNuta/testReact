@@ -8,9 +8,11 @@ export const ZboruriView: React.FC<PropsWithChildren<Props>> = (props: PropsWith
     return ( 
         <>
 
-          {props.data && props.data.map(item => {
+         {props.error && <h1>{props.error}</h1>}
+         {props.pending && <h1>Loading...</h1>}
+          {props.data && props.data.map((item, index) => {
             return (
-              <Item item={item}/>
+              <Item key={index} item={item}/>
             )
           })}
         </>
