@@ -25,13 +25,7 @@ type operatingCarrier = {
   name: string;
 };
 
-type price = {
+export type price = {
   amount: number;
   currency: string;
 };
-
-//  când faceți clic pe butonul `Rezervați!`, mergeți la pagina `/booking/:id`
-//  care arată informații detaliate despre card, inclusiv toate segmentele de zbor
-//  și proprietățile avionului, transportatorului, operatorului (dacă există);
-// 3. Dacă mergem la pagina `/booking/:id`, atunci fișierul caută un zbor cu acel id
-// și arată informații detaliate despre acesta.

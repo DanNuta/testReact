@@ -1,17 +1,17 @@
 export type DataDbType = {
-    id?: string,
-    price?: number,
-    currency?: string,
-    course: CityInformation[]
+  id?: string;
+  price?: number;
+  currency?: string;
+  course: CityInformation[];
 };
 
 export interface CityInformation {
-    city_station: City_Info,
-    city_destination: City_Info,
+  city_station: City_Info;
+  city_destination: City_Info;
 }
 
 type City_Info = {
-    city?: string,
-    country?: string,
-    code_airport: string
-}
+  city?: string;
+  country?: string;
+  code_airport: string;
+};

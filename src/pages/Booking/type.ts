@@ -1,8 +1,7 @@
-import {data} from "../../hook/useFetchSingleItem/type";
-
+import { data } from "../../hook/useFetchSingleItem/type";
 
 export type Props = {
-    pending: boolean,
-    error: string | null,
-    data?: data;
-}
+  pending: boolean;
+  error: string | null;
+  data?: data;
+};

@@ -14,9 +14,6 @@ export function useFetch(url: string) {
         const data = await fetch(url);
         const json_data = await data.json();
 
-        
-        
-
         for (const element of json_data) {
           const data_rezervare: DataDbType = {
             id: element.id,

@@ -1,6 +1,4 @@
-
-
 export type Props = {
-    title: string;
-    id: string;
-  };
+  title: string;
+  id: string;
+};
