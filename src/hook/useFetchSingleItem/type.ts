@@ -2,15 +2,15 @@ import { CityInformation } from "../../hook/useFetch/useFetchType";
 
 export type Props = {
   id: string;
-  data: data;
+  data?: data;
 };
 
-type data = {
+export type data = {
   price: price;
   segments: segments[];
 };
 
-interface segments extends CityInformation {
+export interface segments extends CityInformation {
   plane: plane | null;
   carrier: carrier;
   operatingCarrier: operatingCarrier | null;
