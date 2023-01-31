@@ -4,9 +4,8 @@ import { useFetchSingleItem } from "../../hook/useFetchSingleItem/useFetchSingle
 import { useParams } from "react-router-dom";
 import { Props } from "./type";
 
-
-export const Booking: React.FC<PropsWithChildren<Props>> = (
-  props: PropsWithChildren<Props>
+export const Booking: React.FC<PropsWithChildren> = (
+  props: PropsWithChildren
 ) => {
   const { id } = useParams();
   const url: string = `http://localhost:3000/itineraries/${id}`;

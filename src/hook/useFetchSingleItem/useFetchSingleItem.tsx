@@ -12,6 +12,7 @@ export const useFetchSingleItem = (url: string) => {
   }, []);
 
   async function getData(url: string) {
+    setPending(true);
     try {
       const data_bd = await fetch(url);
       const data_json = await data_bd.json();
@@ -86,36 +87,39 @@ export const useFetchSingleItem = (url: string) => {
                   name: segment["carrier"].name,
                   code: segment["carrier"].code,
                 },
-                 operatingCarrier: {
-                  code: segment["operatingCarrier"] ? segment["operatingCarrier"].code : "",
-                  name: segment["operatingCarrier"] ?  segment["operatingCarrier"].name : "",
-                },
-                city_station: {
-                  city: station_name_city,
-                  country: station_country,
-                  code_airport: station_code_airport,
+                operatingCarrier: {
+                  code: segment["operatingCarrier"]
+                    ? segment["operatingCarrier"].code
+                    : "",
+                  name: segment["operatingCarrier"]
+                    ? segment["operatingCarrier"].name
+                    : "",
                 },
                 city_destination: {
                   city: destination_name,
                   country: destination_country,
                   code_airport: destination_code_airport,
                 },
+                city_station: {
+                  city: station_name_city,
+                  country: station_country,
+                  code_airport: station_code_airport,
+                },
               };
 
-
               data_back.segments.push(element);
-
             }
           }
         }
       }
       setData((prev) => data_back);
+      setPending(false);
+      setError(null);
     } catch (e) {
       setPending(false);
       setError("A aparut o erroare");
     }
   }
 
-
-  return {data, error, pending}
+  return { data, error, pending };
 };

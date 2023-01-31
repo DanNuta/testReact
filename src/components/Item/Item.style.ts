@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const DivContainer = styled.div`
   text-align: center;
   width: 60%;
@@ -14,13 +13,6 @@ export const DivContainer = styled.div`
   padding: 1rem;
 `;
 
-
-
-
-
 export const PriceH1 = styled.p``;
 
 export const CodeP = styled.p``;
-
-
-
